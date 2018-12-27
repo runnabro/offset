@@ -1,0 +1,41 @@
+// font stack
+$sans-serif: -apple-system,'BlinkMacSystemFont','Helvetica Neue','Segoe UI',sans-serif;
+$weight-bold: 600;
+$weight-normal: 400;
+
+// colors
+$black: #333;
+$gray: #aaa;
+$gray-light: #dadada;
+$gray-lighter: #e6e6e6;
+$gray-lightest: #fafafa;
+
+$blue: #2086ef;
+$green: #3ccb5a;
+$orange: #e39f0e;
+$red: #f25058;
+$purple: #8414f2;
+$white: #fff;
+
+// dimensions
+$xxl: 120px;
+$xl: 80px;
+$lg: 40px;
+$md: 20px;
+$sm: 10px;
+$xs: 5px;
+
+// border-radius
+$radius-sm: 4px;
+$radius-md: 8px;
+
+// animations
+@keyframes rainbow {
+  0% {
+    background-position: 0 0;
+  }
+
+  100% {
+    background-position: 100% 0;
+  }
+}

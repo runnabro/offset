@@ -1,0 +1,14 @@
+*.dump
+*.iml
+*.log
+*.orig
+*.rdb
+*.sass-cache/
+.DS_Store
+.publish/
+dist/
+node_modules/
+*_BACKUP_*
+*_BASE_*
+*_LOCAL_*
+*_REMOTE_*

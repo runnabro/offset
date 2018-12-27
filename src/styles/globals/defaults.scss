@@ -1,0 +1,21 @@
+// box model reset
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  background: $gray-lightest;
+  color: $black;
+  font-family: $sans-serif;
+  font-feature-settings: 'kern';
+  font-size: 22px;
+  line-height: 1.5;
+  overflow-x: hidden;
+  text-rendering: optimizeLegibility; // kerning magic
+
+  @media (max-width: 320px) {
+    font-size: 19px;
+  }
+}

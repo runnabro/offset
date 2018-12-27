@@ -1,0 +1,11 @@
+.section-card {
+  border-radius: $radius-md;
+  color: $white;
+  overflow: hidden;
+  padding: $lg;
+  position: relative;
+
+  .h2 {
+    margin-bottom: $sm;
+  }
+}

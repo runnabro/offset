@@ -1,0 +1,88 @@
+.btn {
+  border: 0;
+  border-radius: $radius-sm;
+  display: inline-block;
+  font-weight: $weight-bold;
+  overflow: hidden;
+  position: relative;
+  text-decoration: none;
+
+  + .btn {
+    margin-left: $md;
+  }
+
+  .svg {
+    height: 100%;
+    width: $md;
+  }
+
+  .path {
+    fill: currentColor;
+    stroke: none;
+  }
+}
+
+.btn-md {
+  padding: $sm $md;
+}
+
+.btn-sm {
+  font-size: 18px;
+  padding: $xs $sm;
+}
+
+.btn-white {
+  background: rgba($white,.1);
+  box-shadow: inset 0 0 0 2px rgba($white,.75);
+  color: $white;
+  transform-origin: 50% 0;
+  transition: background .3s cubic-bezier(.22,.61,.36,1),box-shadow .3s cubic-bezier(.22,.61,.36,1);
+
+  &:hover,
+  &:active,
+  &:focus {
+    background: rgba($white,.15);
+    box-shadow: inset 0 0 0 2px $white;
+  }
+}
+
+.btn-white-outline {
+  box-shadow: inset 0 0 0 1px rgba($white,.25);
+  color: rgba($white,.75);
+  transition: box-shadow .3s cubic-bezier(.22,.61,.36,1),color .3s cubic-bezier(.22,.61,.36,1);
+
+  &:hover,
+  &:active,
+  &:focus {
+    box-shadow: inset 0 0 0 2px $white;
+    color: $white;
+  }
+}
+
+.btn-blue {
+  background: rgba($blue,.05);
+  box-shadow: inset 0 0 0 2px rgba($blue,.75);
+  color: $blue;
+  transform-origin: 50% 0;
+  transition: background .3s cubic-bezier(.22,.61,.36,1),box-shadow .3s cubic-bezier(.22,.61,.36,1);
+
+  &:hover,
+  &:active,
+  &:focus {
+    background: rgba($blue,.1);
+    box-shadow: inset 0 0 0 2px $blue;
+  }
+}
+
+.btn-blue-outline {
+  box-shadow: inset 0 0 0 1px rgba($blue,.25);
+  color: rgba($blue,.75);
+  transition: box-shadow .3s cubic-bezier(.22,.61,.36,1),color .3s cubic-bezier(.22,.61,.36,1);
+
+  &:hover,
+  &:active,
+  &:focus {
+    box-shadow: inset 0 0 0 2px $blue;
+    color: $blue;
+  }
+}

@@ -1,0 +1,54 @@
+.hero,
+.section-callout {
+  border-radius: $radius-md;
+  overflow: hidden;
+
+  .link .span,
+  .link:hover::after,
+  .link:active::after,
+  .link:focus::after {
+    background-image: linear-gradient(135deg,lighten($purple,20%) 0%,lighten($blue,20%) 12.5%,$green 25%,lighten($orange,5%) 37.5%,lighten($red,10%) 50%,lighten($purple,20%) 62.5%,lighten($blue,20%) 75%,$green 87.5%,lighten($orange,5%) 100%);
+  }
+}
+
+.hero {
+  color: $white;
+  position: relative;
+
+  .back-arrow {
+    cursor: pointer;
+    height: 40px;
+    left: $lg;
+    position: absolute;
+    top: $lg;
+    width: 40px;
+
+    @media (max-width: 850px) and (min-width: 631px) {
+      left: $md;
+      top: $md;
+    }
+
+    @media (max-width: 850px) {
+      height: 30px;
+      width: 30px;
+    }
+
+    &:hover .path,
+    &:active .path,
+    &:focus .path {
+      fill: rgba($white,.15);
+      stroke: $white;
+    }
+  }
+
+  .path {
+    fill: rgba($white,.1);
+    stroke: rgba($white,.75);
+    transition: fill .3s cubic-bezier(.22,.61,.36,1),stroke .3s cubic-bezier(.22,.61,.36,1);
+  }
+}
+
+.section-callout {
+  padding-left: $xl;
+  padding-right: $xl;
+}
