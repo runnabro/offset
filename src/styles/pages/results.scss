@@ -1,0 +1,12 @@
+.results {
+  display: none;
+  padding: $md;
+
+  &.show {
+    display: block;
+  }
+}
+
+.row {
+  height: $lg;
+}

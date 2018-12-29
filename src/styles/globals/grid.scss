@@ -82,3 +82,8 @@ $sizes: $xs,$sm,$md,$lg,$xl;
     }
   }
 }
+
+.container {
+  max-width: 600px;
+  width: 100%;
+}

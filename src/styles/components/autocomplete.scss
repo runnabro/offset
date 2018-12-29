@@ -1,0 +1,35 @@
+.autocomplete-wrapper {
+  position: relative;
+}
+
+.autocomplete-results {
+  background: $blue;
+  box-shadow: inset 0 0 0 1px $white;
+  left: 0;
+  position: absolute;
+  right: 0;
+  top: $xl - 1px;
+  z-index: 1;
+}
+
+.autocomplete-result {
+  color: $white;
+  cursor: pointer;
+  padding: $xs $md;
+
+  &:first-child {
+    border-radius: $radius-sm $radius-sm 0 0;
+    padding-top: $md;
+  }
+
+  &:last-child {
+    border-radius: 0 0 $radius-sm $radius-sm;
+    padding-bottom: $md;
+  }
+
+  &:hover,
+  &:active,
+  &:focus {
+    text-decoration: underline;
+  }
+}

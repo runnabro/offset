@@ -74,3 +74,8 @@
 .em {
   font-weight: $weight-bold;
 }
+
+// highlight
+*::selection {
+  background: $black;
+}

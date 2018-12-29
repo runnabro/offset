@@ -10,5 +10,10 @@
 @import "globals/typography";
 
 // components
+@import "components/autocomplete";
 @import "components/buttons";
 @import "components/inputs";
+
+// pages
+@import "pages/base";
+@import "pages/results";
