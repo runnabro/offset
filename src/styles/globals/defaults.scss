@@ -11,7 +11,7 @@ html {
   font-family: $sans-serif;
   font-feature-settings: 'kern';
   font-size: 22px;
-  font-weight: 800;
+  font-weight: $weight-bold;
   line-height: 1.5;
   overflow-x: hidden;
   text-rendering: optimizeLegibility; // kerning magic

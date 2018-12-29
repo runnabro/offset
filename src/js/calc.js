@@ -73,7 +73,7 @@ const checkDistance = (self) => {
 
 const showResults = (carbon, offset, mitigation) => {
   document.getElementById('impact').innerHTML = `${carbon.toFixed(1)} METRIC TONS`
-  document.getElementById('offset').innerHTML = `$${offset.toFixed(2)} IN OFFSETS OR…`
-  document.getElementById('mitigation').innerHTML = `$${mitigation.toFixed(2)} IN MITIGATION`
+  // document.getElementById('offset').innerHTML = `$${offset.toFixed(2)} IN OFFSETS OR…`
+  // document.getElementById('mitigation').innerHTML = `$${mitigation.toFixed(2)} IN MITIGATION`
   document.querySelector('.results').classList.add('show')
 }

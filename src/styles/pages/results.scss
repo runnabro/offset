@@ -5,6 +5,10 @@
   &.show {
     display: block;
   }
+
+  .button {
+    margin-left: $sm;
+  }
 }
 
 .row {

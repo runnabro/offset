@@ -32,7 +32,7 @@ input {
   background: $blue;
   border-bottom: $input-border solid $white;
   color: $white;
-  font-weight: 800;
+  font-weight: $weight-bold;
   padding: 0 $md;
   resize: none;
   text-transform: uppercase;
