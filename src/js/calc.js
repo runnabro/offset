@@ -40,7 +40,6 @@ const calcCarbon = (distance) => {
   let carbon = null;
   distance = distance * 2 // assume round-trip
   distance = distance * .621371 // convert to miles
-  console.log(`miles flown (rt): ${distance}`)
 
   // source: http://lipasto.vtt.fi/yksikkopaastot/henkiloliikennee/ilmaliikennee/ilmae.htm
   // if short-haul, 14.7 ounces/miles = .000416738 metric tonnes/mile
@@ -52,7 +51,8 @@ const calcCarbon = (distance) => {
   // Carbon Fund estimates they offset 1 metric tonne per $10 USD
   // Cool Earth estimates they mitigate 1 metric tonne per 25 pence (.32 USD in Dec 2018)
   // carbon impact by metric tonnes, offset cost, mitigation cost
-  showResults(carbon, carbon * 10, carbon * .32)
+  // showResults(carbon, carbon * 10, carbon * .32)
+  showResults(carbon)
 }
 
 const checkInputData = (id) => {
@@ -64,14 +64,11 @@ const checkInputData = (id) => {
   ])
 }
 
-const checkDistance = (self) => {
-  setTimeout(() => {
-    const idChanged = self['id'].slice(-1)
-    if (checkInputData(1)[0] && checkInputData(2)[0]) calcDistance(...checkInputData(1), ...checkInputData(2))
-  }, 200)
+const checkDistance = () => {
+  calcDistance(...checkInputData(1), ...checkInputData(2))
 }
 
-const showResults = (carbon, offset, mitigation) => {
+const showResults = (carbon) => {
   document.getElementById('impact').innerHTML = `${carbon.toFixed(1)} METRIC TONS`
   // document.getElementById('offset').innerHTML = `$${offset.toFixed(2)} IN OFFSETS OR…`
   // document.getElementById('mitigation').innerHTML = `$${mitigation.toFixed(2)} IN MITIGATION`
