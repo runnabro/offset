@@ -4,19 +4,25 @@
 <main class="grid-block justify-center main">
   <div class="container">
     <input
+      @change="airportChanged"
       class="input origin"
       id="autocomplete-airport-1"
-      onchange="checkDistance(this)"
       placeholder="ORIGIN"
     >
     <input
+      @change="airportChanged"
       class="input destination"
       id="autocomplete-airport-2"
-      onchange="checkDistance(this)"
       placeholder="DESTINATION"
     >
-    <section class="flex results">
-      <span class="row" id="impact"></span>
+    <section
+      :class="{
+        hide: !showResults,
+        show: showResults
+      }"
+      class="flex results"
+    >
+      <span class="row">{{ carbon }}</span>
       <!-- <button class="button">ADD ANOTHER</button> -->
       <a
         class="button"
