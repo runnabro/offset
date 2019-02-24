@@ -58,7 +58,7 @@ const calc = new Vue({
     carbon: null
   },
   methods: {
-    selectAll: (e) => e.target.select()
+    selectAll: (e) => e.target.setSelectionRange(0, e.target.value.length)
   }
 })
 
