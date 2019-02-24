@@ -56,6 +56,9 @@ const calc = new Vue({
   el: 'main',
   data: {
     carbon: null
+  },
+  methods: {
+    selectAll: (e) => e.target.select()
   }
 })
 
