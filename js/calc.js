@@ -16,10 +16,8 @@ const airportOptions = {
   ]
 }
 
-let distance = null;
-
-AirportInput('autocomplete-airport-1', airportOptions);
-AirportInput('autocomplete-airport-2', airportOptions);
+AirportInput('input-origin', airportOptions)
+AirportInput('input-destination', airportOptions)
 
 // great circle using haversine formula
 const convertDegreesToRadians = (degrees) => degrees * Math.PI / 180
@@ -33,11 +31,10 @@ const calcDistance = (lat1, lon1, lat2, lon2) => {
             Math.sin(dLon/2) * Math.sin(dLon/2) * Math.cos(lat1) * Math.cos(lat2)
   const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a))
   distance = earthRadiusKm * c
-  calcCarbon(distance)
+  return distance
 }
 
 const calcCarbon = (distance) => {
-  let carbon = null;
   distance = distance * 2 // assume round-trip
   distance = distance * .621371 // convert to miles
 
@@ -51,26 +48,38 @@ const calcCarbon = (distance) => {
   // Carbon Fund estimates they offset 1 metric tonne per $10 USD
   // Cool Earth estimates they mitigate 1 metric tonne per 25 pence (.32 USD in Dec 2018)
   // carbon impact by metric tonnes, offset cost, mitigation cost
-  // showResults(carbon, carbon * 10, carbon * .32)
-  showResults(carbon)
+  carbon = carbon.toFixed(1)
+  return carbon
 }
 
-const checkInputData = (id) => {
-  const realId = 'autocomplete-airport-' + id
-  const realIdEl = document.getElementById(realId)
-  return ([
-    realIdEl.getAttribute('data-lat'),
-    realIdEl.getAttribute('data-lon')
-  ])
-}
+const calc = new Vue({
+  el: 'main',
+  data: {
+    carbon: null
+  }
+})
 
-const checkDistance = () => {
-  calcDistance(...checkInputData(1), ...checkInputData(2))
-}
+const targetNode = document.querySelectorAll('.js-input')
+const config = { attributes: true }
+let origin = null
+let destination = null
 
-const showResults = (carbon) => {
-  document.getElementById('impact').innerHTML = `${carbon.toFixed(1)} METRIC TONS`
-  // document.getElementById('offset').innerHTML = `$${offset.toFixed(2)} IN OFFSETS OR…`
-  // document.getElementById('mitigation').innerHTML = `$${mitigation.toFixed(2)} IN MITIGATION`
-  document.querySelector('.results').classList.add('show')
+// Callback function to execute when mutations are observed
+const callback = (mutationsList, observer) => {
+  for(let mutation of mutationsList) {
+    if (mutation.attributeName === 'data-lon' && mutation.target.id === 'input-origin') origin = mutation.target
+    if (mutation.attributeName === 'data-lon' && mutation.target.id === 'input-destination') destination = mutation.target
+    if (origin && destination) {
+      const distance = calcDistance(origin.getAttribute('data-lat'), origin.getAttribute('data-lon'), destination.getAttribute('data-lat'), destination.getAttribute('data-lon'))
+      calc.carbon = `${calcCarbon(distance)} METRIC TONS`
+    }
+  }
+};
+
+// Create an observer instance linked to the callback function
+const observer = new MutationObserver(callback);
+
+// Start observing the target node for configured mutations
+for (let i = 0; i < targetNode.length; i++) {
+  observer.observe(targetNode[i], config);
 }
