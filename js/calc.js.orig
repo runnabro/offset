@@ -55,8 +55,12 @@ const calcCarbon = (distance) => {
 const calc = new Vue({
   el: 'main',
   data: {
+<<<<<<< HEAD
     carbon: null,
     showResults: false
+=======
+    carbon: null
+>>>>>>> 44dbe5f6046993f0c60b463961addf87cceab922
   },
   methods: {
     selectAll: (e) => e.target.setSelectionRange(0, e.target.value.length)
