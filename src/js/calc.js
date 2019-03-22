@@ -64,8 +64,8 @@ const checkInputData = (id) => {
 const calc = new Vue({
   el: 'main',
   data: {
-    showResults: false,
-    carbon: null
+    carbon: null,
+    showResults: false
   },
   methods: {
     airportChanged: checkDistance = () => {

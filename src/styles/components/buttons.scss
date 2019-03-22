@@ -2,7 +2,7 @@
   align-items: center;
   background: $white;
   border: 0;
-  border-radius: $radius-sm;
+  border-radius: 1px;
   color: $blue;
   cursor: pointer;
   display: inline-flex;
@@ -27,6 +27,12 @@
     background: transparent;
     border: 1px solid $white;
     color: $white;
+  }
+
+  &[data-text]::before,
+  &[data-text]::before, {
+    background: $white  ;
+    color: $blue;
   }
 
   .svg {
