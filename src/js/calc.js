@@ -16,8 +16,8 @@ const airportOptions = {
   ]
 }
 
-AirportInput('autocomplete-airport-1', airportOptions)
-AirportInput('autocomplete-airport-2', airportOptions)
+AirportInput('input-origin', airportOptions)
+AirportInput('input-destination', airportOptions)
 
 // great circle using haversine formula
 const convertDegreesToRadians = (degrees) => degrees * Math.PI / 180
@@ -52,15 +52,6 @@ const calcCarbon = (distance) => {
   return carbon
 }
 
-const checkInputData = (id) => {
-  const realId = 'autocomplete-airport-' + id
-  const realIdEl = document.getElementById(realId)
-  return ([
-    realIdEl.getAttribute('data-lat'),
-    realIdEl.getAttribute('data-lon')
-  ])
-}
-
 const calc = new Vue({
   el: 'main',
   data: {
@@ -68,10 +59,31 @@ const calc = new Vue({
     showResults: false
   },
   methods: {
-    airportChanged: checkDistance = () => {
-      const distance = calcDistance(...checkInputData(1), ...checkInputData(2))
-      calc.carbon = `${calcCarbon(distance)} METRIC TONS`
-      if (distance !== 0) calc.showResults = true
-    }
+    selectAll: (e) => e.target.setSelectionRange(0, e.target.value.length)
   }
 })
+
+const targetNode = document.querySelectorAll('.js-input')
+const config = { attributes: true }
+let origin = null
+let destination = null
+
+// Callback function to execute when mutations are observed
+const callback = (mutationsList, observer) => {
+  for(let mutation of mutationsList) {
+    if (mutation.attributeName === 'data-lon' && mutation.target.id === 'input-origin') origin = mutation.target
+    if (mutation.attributeName === 'data-lon' && mutation.target.id === 'input-destination') destination = mutation.target
+    if (origin && destination) {
+      const distance = calcDistance(origin.getAttribute('data-lat'), origin.getAttribute('data-lon'), destination.getAttribute('data-lat'), destination.getAttribute('data-lon'))
+      calc.carbon = `${calcCarbon(distance)} METRIC TONS`
+    }
+  }
+};
+
+// Create an observer instance linked to the callback function
+const observer = new MutationObserver(callback);
+
+// Start observing the target node for configured mutations
+for (let i = 0; i < targetNode.length; i++) {
+  observer.observe(targetNode[i], config);
+}

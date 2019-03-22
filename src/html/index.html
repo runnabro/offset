@@ -4,21 +4,21 @@
 <main class="grid-block justify-center main">
   <div class="container">
     <input
-      @change="airportChanged"
-      class="input origin"
-      id="autocomplete-airport-1"
+      @focus="selectAll"
+      class="input origin js-input"
+      id="input-origin"
       placeholder="ORIGIN"
     >
     <input
-      @change="airportChanged"
-      class="input destination"
-      id="autocomplete-airport-2"
+      @focus="selectAll"
+      class="input destination js-input"
+      id="input-destination"
       placeholder="DESTINATION"
     >
     <section
       :class="{
-        hide: !showResults,
-        show: showResults
+        hide: !carbon,
+        show: carbon
       }"
       class="flex results"
     >
