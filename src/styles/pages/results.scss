@@ -1,11 +1,16 @@
 .results {
-  padding: $md;
+  padding: $sm $md;
 
   .button {
-    margin-left: $sm;
+    margin-top: $md;
   }
 }
 
-.row {
-  height: $lg;
+.result {
+  color: transparent;
+  fill: url(#fire);
+  font-size: 50px;
+  position: relative;
+  text-align: center;
+  width: 100%;
 }

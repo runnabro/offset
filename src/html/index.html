@@ -1,28 +1,55 @@
 <!doctype html>
 @@include('html/components/head.html')
 <title>CO2 Flight Calculator</title>
-<main class="grid-block justify-center main">
+<main
+  @click="closePopovers"
+  class="grid-block justify-center main"
+>
   <div class="container">
     <input
       @focus="selectAll"
       class="input origin js-input"
       id="input-origin"
       placeholder="ORIGIN"
+      spellcheck="false"
     >
     <input
       @focus="selectAll"
       class="input destination js-input"
       id="input-destination"
       placeholder="DESTINATION"
+      spellcheck="false"
     >
     <section
       :class="{
         hide: !carbon,
         show: carbon
       }"
-      class="flex results"
+      class="grid-block col align-center results"
     >
-      <span class="row">{{carbon}}</span>
+      <svg
+        :data-text="carbon"
+        class="result"
+        text-anchor="middle"
+        viewBox="0 0 500 100"
+      >
+        <pattern
+          id="fire"
+          viewBox="30 150 186 200"
+          patternUnits="userSpaceOnUse"
+          width="216" height="200"
+        >
+          <image xlink:href="./images/fire.gif" width="256" height="300" />
+        </pattern>
+        <text
+          dy=".35em"
+          text-anchor="middle"
+          x="50%"
+          y="50%"
+        >
+          {{carbon}}
+        </text>
+      </svg>
       <a
         class="button"
         data-text="HELP"

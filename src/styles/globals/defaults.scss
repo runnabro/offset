@@ -6,8 +6,8 @@
 }
 
 html {
-  background: $blue;
-  color: $white;
+  background: $white;
+  color: $blue;
   font-family: $sans-serif;
   font-feature-settings: 'kern';
   font-size: 22px;
@@ -21,8 +21,6 @@ html {
   }
 }
 
-body {
-  background: $blue;
+main {
   height: 100vh;
-  padding-top: 200px;
 }

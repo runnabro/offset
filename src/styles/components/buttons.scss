@@ -1,21 +1,36 @@
 .button {
   align-items: center;
-  background: $white;
+  background: $blue;
   border: 0;
   border-radius: 1px;
-  color: $blue;
+  color: $white;
   cursor: pointer;
   display: inline-flex;
   font-weight: $weight-bold;
   height: $lg;
-  overflow: hidden;
   padding: 0 $sm;
   position: relative;
   text-decoration: none;
 
+  &::after {
+    border: 1px solid $yellow;
+    color: transparent;
+    content: attr(data-text);
+    display: block;
+    height: $lg;
+    left: 5px;
+    position: absolute;
+    text-stroke: 1px $yellow;
+    top: 5px;
+    white-space: nowrap;
+    z-index: 1;
+    width: 100%;
+  }
+
   &:hover,
   &:active,
   &:focus {
+    color: $yellow;
     text-decoration: underline;
   }
 
@@ -27,12 +42,6 @@
     background: transparent;
     border: 1px solid $white;
     color: $white;
-  }
-
-  &[data-text]::before,
-  &[data-text]::before, {
-    background: $white  ;
-    color: $blue;
   }
 
   .svg {

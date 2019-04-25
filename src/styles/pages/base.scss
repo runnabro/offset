@@ -1,42 +1,13 @@
-[data-text] {
-  position: relative;
+.main {
+  padding-left: $md;
+  padding-right: $md;
+  padding-top: calc(50vh - 200px);
 
-  &::after,
-  &::before {
-    background: $blue;
-    clip:rect(0, 900px, 0, 0);
-    color: $white;
-    content:attr(data-text);
-    overflow: hidden;
-    position:absolute;
-    top: 0;
-  }
-
-  &::after {
-    animation: glitch 2.5s infinite linear alternate-reverse;
-    left: 2px;
-    text-shadow: -1px 0 red;
-  }
-
-  &::before {
-    left:-2px;
-    text-shadow: 1px 0 green;
-    animation:glitch-2 3.5s infinite linear alternate-reverse;
+  @media (max-width: 500px) {
+    padding-top: $md;
   }
 }
 
-@keyframes glitch {
-  @for $i from 0 through 20{
-    #{percentage($i*(1/20))}{
-      clip:rect(random(100)+px, 9999px, random(100)+px, 0);
-    }
-  }
-}
-
-@keyframes glitch-2{
-  @for $i from 0 through 20{
-    #{percentage($i*(1/20))}{
-      clip:rect(random(100)+px, 9999px, random(100)+px, 0);
-    }
-  }
+.input {
+  margin-bottom: $sm;
 }

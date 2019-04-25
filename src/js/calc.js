@@ -59,7 +59,13 @@ const calc = new Vue({
     showResults: false
   },
   methods: {
-    selectAll: (e) => e.target.setSelectionRange(0, e.target.value.length)
+    selectAll: (e) => e.target.setSelectionRange(0, e.target.value.length),
+    closePopovers: () => {
+      const popovers = document.body.querySelectorAll('.autocomplete-results')
+      for (let i = 0; i < popovers.length; i++) {
+        popovers[i].innerHTML = ''
+      }
+    }
   }
 })
 
@@ -78,12 +84,12 @@ const callback = (mutationsList, observer) => {
       calc.carbon = `${calcCarbon(distance)} METRIC TONS`
     }
   }
-};
+}
 
 // Create an observer instance linked to the callback function
-const observer = new MutationObserver(callback);
+const observer = new MutationObserver(callback)
 
 // Start observing the target node for configured mutations
 for (let i = 0; i < targetNode.length; i++) {
-  observer.observe(targetNode[i], config);
+  observer.observe(targetNode[i], config)
 }

@@ -4,12 +4,12 @@
 
 .autocomplete-results {
   background: $blue;
-  box-shadow: inset 0 0 0 1px $white;
+  border-radius: $radius-sm;
   left: 0;
   position: absolute;
   right: 0;
   top: $xl - 1px;
-  z-index: 1;
+  z-index: 10;
 }
 
 .autocomplete-result {
@@ -30,6 +30,7 @@
   &:hover,
   &:active,
   &:focus {
+    color: $yellow;
     text-decoration: underline;
   }
 }

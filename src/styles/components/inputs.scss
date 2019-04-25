@@ -29,10 +29,10 @@ input {
 // defaults
 .input,
 .textarea {
-  background: $blue;
-  border-bottom: $input-border solid $white;
-  border-radius: 0;
-  color: $white;
+  background: $white;
+  border: $input-border solid $blue;
+  border-radius: $radius-sm;
+  color: $blue;
   font-weight: $weight-bold;
   padding: 0 $md;
   resize: none;
@@ -41,7 +41,12 @@ input {
   word-break: normal;
 
   &:focus {
+    background: $yellow;
     transition: none;
+
+    &::placeholder {
+      color: rgba($blue,.25);
+    }
   }
 
   // readonly
@@ -65,7 +70,7 @@ input {
 
   // placeholder
   &::placeholder {
-    color: $white;
+    color: $blue;
   }
 }
 
