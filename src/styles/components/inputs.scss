@@ -1,8 +1,8 @@
 // initial styles
 input,
 textarea {
+  -webkit-appearance: none;
   border: 0;
-  background-clip: padding-box;
   cursor: text;
 
   &[disabled] {
