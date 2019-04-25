@@ -2,7 +2,7 @@
 input,
 textarea {
   border: 0;
-  box-shadow: none;
+  background-clip: padding-box;
   cursor: text;
 
   &[disabled] {
