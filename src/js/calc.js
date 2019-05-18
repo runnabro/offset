@@ -82,6 +82,7 @@ const callback = (mutationsList, observer) => {
     if (origin && destination) {
       const distance = calcDistance(origin.getAttribute('data-lat'), origin.getAttribute('data-lon'), destination.getAttribute('data-lat'), destination.getAttribute('data-lon'))
       calc.carbon = `${calcCarbon(distance)} METRIC TONS`
+      calc.showResults = true
     }
   }
 }

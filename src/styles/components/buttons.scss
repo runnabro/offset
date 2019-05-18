@@ -1,47 +1,26 @@
 .button {
   align-items: center;
-  background: $blue;
-  border: 0;
-  border-radius: 1px;
-  color: $white;
+  background: $white;
+  border: 1px solid $blue;
+  box-shadow: 0 3px 0 $blue;
+  border-radius: 3px;
+  color: $blue;
   cursor: pointer;
   display: inline-flex;
   font-weight: $weight-bold;
   height: $lg;
-  padding: 0 $sm;
+  padding: 0 $md;
   position: relative;
   text-decoration: none;
-
-  &::after {
-    border: 1px solid $yellow;
-    color: transparent;
-    content: attr(data-text);
-    display: block;
-    height: $lg;
-    left: 5px;
-    position: absolute;
-    text-stroke: 1px $yellow;
-    top: 5px;
-    white-space: nowrap;
-    z-index: 1;
-    width: 100%;
-  }
 
   &:hover,
   &:active,
   &:focus {
-    color: $yellow;
-    text-decoration: underline;
+    background: $yellow;
   }
 
   &:focus {
     outline: none;
-  }
-
-  &.outline {
-    background: transparent;
-    border: 1px solid $white;
-    color: $white;
   }
 
   .svg {

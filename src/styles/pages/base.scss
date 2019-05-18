@@ -1,13 +1,10 @@
 .main {
-  padding-left: $md;
-  padding-right: $md;
-  padding-top: calc(50vh - 200px);
-
-  @media (max-width: 500px) {
-    padding-top: $md;
-  }
+  display: flex;
+  flex-direction: column;
 }
 
 .input {
-  margin-bottom: $sm;
+  flex: 1 1 auto;
+  height: 50vh;
+  text-align: center;
 }

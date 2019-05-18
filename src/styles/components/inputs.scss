@@ -31,8 +31,6 @@ input {
 .input,
 .textarea {
   background: $white;
-  border: $input-border solid $blue;
-  border-radius: $radius-sm;
   color: $blue;
   font-weight: $weight-bold;
   padding: 0 $md;
@@ -72,24 +70,5 @@ input {
   // placeholder
   &::placeholder {
     color: $blue;
-  }
-}
-
-// sizes
-.input {
-  height: $xl;
-  line-height: $xl - ($input-border * 2);
-
-  &[type="search"] {
-    border-radius: $xl;
-    min-height: $xl; // safari
-
-    // reset so padding is consistent across browsers
-    &::-webkit-search-decoration,
-    &::-webkit-search-cancel-button,
-    &::-webkit-search-results-button,
-    &::-webkit-search-results-decoration {
-      display: none;
-    }
   }
 }

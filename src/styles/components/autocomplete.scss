@@ -1,5 +1,17 @@
 .autocomplete-wrapper {
-  position: relative;
+  flex: 1 1 auto;
+
+  &:first-child .autocomplete-results {
+    bottom: 0;
+  }
+
+  + .autocomplete-wrapper {
+    border-top: 1px solid $blue;
+
+    .autocomplete-results {
+      top: 0;
+    }
+  }
 }
 
 .autocomplete-results {
@@ -8,7 +20,6 @@
   left: 0;
   position: absolute;
   right: 0;
-  top: $xl - 1px;
   z-index: 10;
 }
 
@@ -16,6 +27,7 @@
   color: $white;
   cursor: pointer;
   padding: $xs $md;
+  text-align: center;
 
   &:first-child {
     border-radius: $radius-sm $radius-sm 0 0;
