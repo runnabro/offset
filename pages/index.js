@@ -64,16 +64,28 @@ const calcCarbon = distance => {
   return carbon;
 };
 
+const InputGroup = ({ data, index, setData }) => (
+  <form className="flex">
+    <Input data={data} index={index} name="origin" options={airportOptions} placeholder="Origin" setData={setData} />
+    <Input data={data} index={index} name="destination" options={airportOptions} placeholder="Destination" setData={setData} />
+  </form>
+);
+
 export default function Home() {
   const [carbonTotal, setCarbonTotal] = useState(0);
-  const [origin, setOrigin] = useState(null);
-  const [destination, setDestination] = useState(null);
-
+  const [data, setData] = useState([
+    {
+      destination: {},
+      id: 0,
+      origin: {},
+    }
+  ]);
 
   useEffect(() => {
-    const distance = calcDistance(origin?.lat, origin?.lon, destination?.lat, destination?.lon)
+    const distance = calcDistance(data[0]?.origin?.lat, data[0]?.origin?.lon, data[0]?.destination?.lat, data[0]?.destination?.lon)
     if (distance) setCarbonTotal(calcCarbon(distance));
-  }, [destination, origin]);
+    console.log(data);
+  }, [data]);
 
   return (
     <>
@@ -83,11 +95,9 @@ export default function Home() {
         <script src="https://cdn.jsdelivr.net/npm/airport-autocomplete-js@latest/dist/index.browser.min.js" />
       </Head>
       <main className={`${styles.Home} ${garamond.variable}`}>
-        <section>
-          <Input options={airportOptions} placeholder="Origin" setData={setOrigin} />
-          <Input options={airportOptions} placeholder="Destination" setData={setDestination} />
-          {carbonTotal.toFixed(2)} METRIC TONS
-        </section>
+        {data.map((el, index) => <InputGroup key={index} data={data} index={index} setData={setData} />)}
+        <button type="button">Add Another</button>
+        {carbonTotal.toFixed(2)} METRIC TONS
       </main>
     </>
   );
