@@ -6,4 +6,16 @@
   min-height: 100vh;
   padding-left: var(--md);
   padding-right: var(--md);
+
+  [data-lon],
+  [data-lat] {
+    background: var(--gray);
+    pointer-events: none;
+  }
+}
+
+.Flight {
+  &_deleted {
+    display: none;
+  }
 }

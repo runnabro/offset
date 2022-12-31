@@ -22,70 +22,58 @@ const garamond = localFont({
 });
 
 const airportOptions = {
+  maxPatternLength: 32,
   shouldSort: true,
   threshold: .4,
-  maxPatternLength: 32,
   keys: [
-    { name: 'IATA', weight: .6 },
-    { name: 'name', weight: .2 },
-    { name: 'city', weight: .4 }
+    { name: 'IATA', weight: .25 },
+    { name: 'name', weight: .25 },
+    { name: 'city', weight: .5 }
   ]
 };
 
-// great circle using haversine formula
-const convertDegreesToRadians = (degrees) => degrees * Math.PI / 180;
-const calcDistance = (lat1, lon1, lat2, lon2) => {
-  const earthRadiusKm = 6371;
-  let dLat = convertDegreesToRadians(lat2 - lat1);
-  let dLon = convertDegreesToRadians(lon2 - lon1);
-  lat1 = convertDegreesToRadians(lat1);
-  lat2 = convertDegreesToRadians(lat2);
-  const a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-    Math.sin(dLon / 2) * Math.sin(dLon / 2) * Math.cos(lat1) * Math.cos(lat2);
-  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-  return earthRadiusKm * c;
-}
+const InputGroup = ({ data, index, setData }) => {
+  useEffect(() => {
+    AirportInput(`Origin-${index}`, airportOptions);
+    AirportInput(`Destination-${index}`, airportOptions);
+  }, [data]);
 
-const calcCarbon = distance => {
-  let carbon = 0;
-  distance = distance * 2; // assume round-trip
-  distance = distance * .621371; // convert to miles
-
-  // source: http://lipasto.vtt.fi/yksikkopaastot/henkiloliikennee/ilmaliikennee/ilmae.htm
-  // if short-haul, 14.7 ounces/miles = .000416738 metric tonnes/mile
-  // if long-haul, 10.1 ounces/miles = .0002863302 metric tonnes/mile
-  if (distance < 288) carbon = distance * .000416738;
-  else carbon = distance * .0002863302;
-
-  // source: https://www.coolearth.org/cool-earth-carbon/ https://carbonfund.org/individuals/
-  // Carbon Fund estimates they offset 1 metric tonne per $10 USD
-  // Cool Earth estimates they mitigate 1 metric tonne per 25 pence (.32 USD in Dec 2018)
-  // carbon impact by metric tonnes, offset cost, mitigation cost
-  return carbon;
+  return (
+    <form className="flex">
+      <Input data={data} index={index} name="origin" placeholder="Origin" setData={setData} />
+      <Input data={data} index={index} name="destination" placeholder="Destination" setData={setData} />
+    </form>
+  );
 };
-
-const InputGroup = ({ data, index, setData }) => (
-  <form className="flex">
-    <Input data={data} index={index} name="origin" options={airportOptions} placeholder="Origin" setData={setData} />
-    <Input data={data} index={index} name="destination" options={airportOptions} placeholder="Destination" setData={setData} />
-  </form>
-);
 
 export default function Home() {
   const [carbonTotal, setCarbonTotal] = useState(0);
-  const [data, setData] = useState([
-    {
-      destination: {},
-      id: 0,
-      origin: {},
-    }
-  ]);
+  const initArr = [{
+    carbon: 0,
+    destination: {},
+    id: 0,
+    origin: {},
+  }];
+  const [data, setData] = useState(initArr);
 
-  useEffect(() => {
-    const distance = calcDistance(data[0]?.origin?.lat, data[0]?.origin?.lon, data[0]?.destination?.lat, data[0]?.destination?.lon)
-    if (distance) setCarbonTotal(calcCarbon(distance));
-    console.log(data);
-  }, [data]);
+  const handleNewRow = () => {
+    setData(prev => [...prev, {
+      deleted: false,
+      destination: {},
+      id: data.length,
+      origin: {},
+    }]);
+  };
+
+  const handleDeleteRow = index => {
+    let newData = data.map((flight) => {
+      if (flight?.id === index) flight.deleted = true;
+      return flight;
+    });
+    setData(newData);
+  };
+
+  const handleClear = () => location.reload();
 
   return (
     <>
@@ -95,9 +83,17 @@ export default function Home() {
         <script src="https://cdn.jsdelivr.net/npm/airport-autocomplete-js@latest/dist/index.browser.min.js" />
       </Head>
       <main className={`${styles.Home} ${garamond.variable}`}>
-        {data.map((el, index) => <InputGroup key={index} data={data} index={index} setData={setData} />)}
-        <button type="button">Add Another</button>
-        {carbonTotal.toFixed(2)} METRIC TONS
+        {data.map(({ carbon, deleted }, index) => {
+          return (
+            <div className={`flex ${deleted ? styles['Flight_deleted'] : ''}`}>
+              <InputGroup key={index} data={data} index={index} setData={setData} />
+              {carbon ? carbon.toFixed(2) : 0} METRIC TONS
+              {data.length > 1 && <button onClick={() => handleDeleteRow(index)} type="button">DELETE</button>}
+            </div>
+          )
+        })}
+        <button onClick={handleNewRow} type="button">Add Another</button>
+        <button onClick={handleClear} type="button">Start Over</button>
       </main>
     </>
   );
