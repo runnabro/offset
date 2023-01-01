@@ -75,6 +75,12 @@ export default function Home() {
 
   const handleClear = () => location.reload();
 
+  useEffect(() => {
+    const newCarbonTotal = data.reduce((n, { carbon, deleted }) => !deleted ? n + carbon : n, 0);
+    if (isNaN(newCarbonTotal)) return;
+    setCarbonTotal(newCarbonTotal.toFixed(2));
+  }, [data]);
+
   return (
     <>
       <Head>
@@ -85,13 +91,14 @@ export default function Home() {
       <main className={`${styles.Home} ${garamond.variable}`}>
         {data.map(({ carbon, deleted }, index) => {
           return (
-            <div className={`flex ${deleted ? styles['Flight_deleted'] : ''}`}>
+            <div key={index} className={`flex ${deleted ? styles['Flight_deleted'] : ''}`}>
               <InputGroup key={index} data={data} index={index} setData={setData} />
               {carbon ? carbon.toFixed(2) : 0} METRIC TONS
               {data.length > 1 && <button onClick={() => handleDeleteRow(index)} type="button">DELETE</button>}
             </div>
           )
         })}
+        <div>{carbonTotal} METRIC TONS</div>
         <button onClick={handleNewRow} type="button">Add Another</button>
         <button onClick={handleClear} type="button">Start Over</button>
       </main>
