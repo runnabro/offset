@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 
 import mutationObserver from "../mutationObserver";
 
@@ -35,7 +35,7 @@ const calcCarbon = (distance) => {
   return carbon;
 };
 
-const Input = ({ data, index, placeholder, setData }) => {
+const Input = ({ data, index, isDisabled, placeholder, setData }) => {
   const inputRef = useRef(null);
   const name = placeholder === "Destination" ? "destination" : "origin";
 
@@ -46,7 +46,6 @@ const Input = ({ data, index, placeholder, setData }) => {
   }, []);
 
   const handleChange = (index, dataset) => {
-    // works, but deletes new fields when editing old ones
     let newData = data.map((flight) => {
       if (flight?.id === index) {
         flight[name] = inputRef.current.dataset;
@@ -67,6 +66,7 @@ const Input = ({ data, index, placeholder, setData }) => {
   return (
     <input
       id={`${placeholder}-${index}`}
+      disabled={isDisabled}
       placeholder={placeholder}
       ref={inputRef}
       spellCheck="false"
