@@ -39,10 +39,10 @@ const InputGroup = ({ data, index, setData }) => {
     AirportInput(`Origin-${index}`, airportOptions);
     AirportInput(`Destination-${index}`, airportOptions);
 
-    const hasPrevRowDestination = Object.keys(data?.at(-1).destination).length !== 0;
-    const hasPrevRowOrigin = Object.keys(data?.at(-1).origin).length !== 0;
-    const hasPrevRow = hasPrevRowDestination && hasPrevRowOrigin;
-    if (hasPrevRow) setIsDisabled(true);
+    // disable when filled
+    const hasDestination = Object.keys(data[index].destination).length !== 0;
+    const hasOrigin = Object.keys(data[index].origin).length !== 0;
+    if (hasDestination && hasOrigin) setIsDisabled(true);
   }, [data]);
 
   return (
@@ -59,6 +59,7 @@ const InputGroup = ({ data, index, setData }) => {
 
 export default function Home() {
   const [carbonTotal, setCarbonTotal] = useState(0);
+  const [hasPrevRow, setHasPrevRow] = useState(false);
   const initArr = [{
     carbon: 0,
     deleted: false,
@@ -69,10 +70,6 @@ export default function Home() {
   const [data, setData] = useState(initArr);
 
   const handleNewRow = () => {
-    // only add a new row if the previous row is filled out
-    const hasPrevRowDestination = Object.keys(data.at(-1).destination).length !== 0;
-    const hasPrevRowOrigin = Object.keys(data.at(-1).origin).length !== 0;
-    const hasPrevRow = hasPrevRowDestination && hasPrevRowOrigin;
     if (hasPrevRow) {
       setData(prev => [...prev, {
         carbon: 0,
@@ -95,6 +92,12 @@ export default function Home() {
   const handleClear = () => location.reload();
 
   useEffect(() => {
+    // only add a new row if the previous row is filled out
+    const hasPrevRowDestination = Object.keys(data.at(-1).destination).length !== 0;
+    const hasPrevRowOrigin = Object.keys(data.at(-1).origin).length !== 0;
+    setHasPrevRow(hasPrevRowDestination && hasPrevRowOrigin);
+
+    // calculate carbon total
     const newCarbonTotal = data.reduce((n, { carbon, deleted }) => !deleted ? n + carbon : n, 0);
     if (isNaN(newCarbonTotal)) return;
     setCarbonTotal(newCarbonTotal.toFixed(2));
@@ -122,7 +125,7 @@ export default function Home() {
           </tbody>
         </table>
         <div>{carbonTotal} METRIC TONS</div>
-        <button onClick={handleNewRow} type="button">Add Another</button>
+        <button disabled={!hasPrevRow} onClick={handleNewRow} type="button">Add Another</button>
         <button onClick={handleClear} type="button">Start Over</button>
       </main>
     </>
