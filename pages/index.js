@@ -1,10 +1,9 @@
 import { useEffect, useState } from 'react';
 import localFont from '@next/font/local';
 import Head from 'next/head';
-import Image from 'next/image';
 
 import Input from '../components/Input';
-
+import Map from '../components/Map';
 import styles from '../styles/Home.module.scss';
 
 const garamond = localFont({
@@ -108,7 +107,6 @@ export default function Home() {
       <Head>
         <title>🌏✈️💨</title>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <script src="https://cdn.jsdelivr.net/npm/airport-autocomplete-js@latest/dist/index.browser.min.js" />
       </Head>
       <main className={`${styles.Home} ${garamond.variable}`}>
         <table>
@@ -127,6 +125,7 @@ export default function Home() {
         <div>{carbonTotal} METRIC TONS</div>
         <button disabled={!hasPrevRow} onClick={handleNewRow} type="button">Add Another</button>
         <button onClick={handleClear} type="button">Start Over</button>
+        <Map />
       </main>
     </>
   );
