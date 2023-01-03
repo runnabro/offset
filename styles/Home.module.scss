@@ -16,6 +16,7 @@
   border-spacing: 0;
 
   th {
+    color: var(--theme-text-minimum);
     font-weight: var(--weight-normal);
     text-align: left;
     padding: 7px 6px;
@@ -28,7 +29,10 @@
   th,
   td {
     border-bottom: 1px solid var(--theme-border);
-    color: var(--theme-text-minimum);
+  }
+
+  td {
+    color: var(--theme-text-default);
   }
 
   &-delete,

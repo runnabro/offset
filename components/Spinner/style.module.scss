@@ -1,0 +1,81 @@
+.Spinner {
+  --Spinner-color: #868686;
+  --Spinner-color-fade: rgba(134, 134, 134, 0.4);
+
+  @media (prefers-color-scheme: dark) {
+    --Spinner-color: rgb(224, 224, 224);
+    --Spinner-color-fade: rgba(59, 59, 59, 0.4);
+  }
+
+  align-items: center;
+  background: var(--theme-bg);
+  display: flex;
+  height: 100vh;
+  justify-content: center;
+  offset: 0;
+  position: fixed;
+  width: 100vw;
+  z-index: 101;
+
+  &-svg {
+    animation: spin 0.6s;
+    fill: var(--Spinner-color);
+
+    path:nth-of-type(1) {
+      animation: pulse 1s infinite linear;
+    }
+    path:nth-of-type(2) {
+      animation: pulse 1s -0.083s infinite linear;
+    }
+    path:nth-of-type(3) {
+      animation: pulse 1s -0.166s infinite linear;
+    }
+    path:nth-of-type(4) {
+      animation: pulse 1s -0.249s infinite linear;
+    }
+    path:nth-of-type(5) {
+      animation: pulse 1s -0.332s infinite linear;
+    }
+    path:nth-of-type(6) {
+      animation: pulse 1s -0.415s infinite linear;
+    }
+    path:nth-of-type(7) {
+      animation: pulse 1s -0.498s infinite linear;
+    }
+    path:nth-of-type(8) {
+      animation: pulse 1s -0.581s infinite linear;
+    }
+    path:nth-of-type(9) {
+      animation: pulse 1s -0.664s infinite linear;
+    }
+    path:nth-of-type(10) {
+      animation: pulse 1s -0.747s infinite linear;
+    }
+    path:nth-of-type(11) {
+      animation: pulse 1s -0.83s infinite linear;
+    }
+    path:nth-of-type(12) {
+      animation: pulse 1s -0.913s infinite linear;
+    }
+  }
+
+  @keyframes pulse {
+    50% {
+      fill: var(--Spinner-color);
+    }
+    to {
+      fill: var(--Spinner-color-fade);
+    }
+  }
+
+  @keyframes spin {
+    from {
+      transform: scale(0);
+      opacity: 0;
+    }
+    to {
+      transform: scale(1);
+      opacity: 1;
+    }
+  }
+}

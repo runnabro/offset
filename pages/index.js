@@ -4,6 +4,7 @@ import Head from 'next/head';
 import { ArrowRight, Delete, Plus, Skull, Undo } from 'lucide-react';
 
 import Input from '../components/Input';
+import Spinner from '../components/Spinner';
 
 import styles from '../styles/Home.module.scss';
 
@@ -97,6 +98,16 @@ export default function Home() {
 
   const handleClear = () => location.reload();
 
+  const [loading, setLoading] = useState(true);
+  useEffect(() => {
+    if (loading) {
+      const timer = setTimeout(() => {
+        setLoading(false);
+      }, 1000)
+      return () => clearTimeout(timer);
+    }
+  });
+
   useEffect(() => {
     // only add a new row if the previous row is filled out
     const hasPrevRowDestination = Object.keys(data.at(-1).destination).length !== 0;
@@ -112,10 +123,12 @@ export default function Home() {
   return (
     <>
       <Head>
-        <title>🌏✈️💨</title>
+        <title>🛩️</title>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <script src="https://cdn.jsdelivr.net/npm/airport-autocomplete-js@latest/dist/index.browser.min.js" />
+        <link rel="icon" href="/favicon.png" />
       </Head>
+      {loading && <Spinner />}
       <main className={`${styles.Home} ${garamond.variable}`}>
         <table className={styles.Table}>
           <thead>
