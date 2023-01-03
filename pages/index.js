@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import localFont from '@next/font/local';
 import Head from 'next/head';
-import Tippy from '@tippyjs/react';
 import { ArrowRight, Delete, Plus, Skull, Undo } from 'lucide-react';
 
 import Input from '../components/Input';
