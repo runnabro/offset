@@ -2,6 +2,8 @@ import { useEffect, useRef } from "react";
 
 import mutationObserver from "../mutationObserver";
 
+import styles from "./style.module.scss";
+
 // great circle using haversine formula
 const convertDegreesToRadians = (degrees) => (degrees * Math.PI) / 180;
 const calcDistance = (lat1, lon1, lat2, lon2) => {
@@ -35,9 +37,8 @@ const calcCarbon = (distance) => {
   return carbon;
 };
 
-const Input = ({ data, index, isDisabled, placeholder, setData }) => {
+const Input = ({ data, index, isDisabled, name, placeholder, setData }) => {
   const inputRef = useRef(null);
-  const name = placeholder === "Destination" ? "destination" : "origin";
 
   useEffect(() => {
     mutationObserver(inputRef.current, () =>
@@ -65,7 +66,8 @@ const Input = ({ data, index, isDisabled, placeholder, setData }) => {
 
   return (
     <input
-      id={`${placeholder}-${index}`}
+      id={`${name}-${index}`}
+      className={styles.Input}
       disabled={isDisabled}
       placeholder={placeholder}
       ref={inputRef}

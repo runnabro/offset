@@ -5,7 +5,7 @@
   // colors
   --black: #111;
   --white: #fefefe;
-  --gray: #aaa;
+  --gray: #757575;
   --gray-light: #dadada;
   --gray-lighter: #e6e6e6;
   --gray-lightest: #fcfcfc;
@@ -16,8 +16,10 @@
   --purple: #8414f2;
   --white: #fff;
 
+  --theme-border: rgba(0, 0, 0, 0.1);
   --theme-bg: var(--white);
   --theme-text-default: var(--black);
+  --theme-text-minimum: var(--gray);
 
   // dimensions
   --xxl: 120px;
@@ -33,10 +35,14 @@
 
   // animations
   --timing: cubic-bezier(0.16, 1, 0.3, 1);
+
+  --sans: -apple-system, "BlinkMacSystemFont", "Helvetica Neue", "Segoe UI",
+    sans-serif;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
+    --theme-border: rgba(255, 255, 255, 0.1);
     --theme-bg: var(--black);
     --theme-text-default: var(--white);
   }
@@ -45,10 +51,11 @@
 body {
   background: var(--theme-bg);
   color: var(--theme-text-default);
-  font-family: var(--garamond);
-  letter-spacing: -0.05em;
+  font-family: var(--sans);
+  font-size: 14px;
 }
 
 @import "./normalize.scss";
 @import "./reset.scss";
 @import "./flex.scss";
+@import "./autocomplete.scss";

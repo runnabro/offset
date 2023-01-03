@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react';
 import localFont from '@next/font/local';
 import Head from 'next/head';
-import Image from 'next/image';
+import Tippy from '@tippyjs/react';
+import { ArrowRight, Delete, Plus, Skull, Undo } from 'lucide-react';
 
 import Input from '../components/Input';
 
@@ -21,7 +22,13 @@ const garamond = localFont({
   variable: '--garamond',
 });
 
+const airportFormat = `<a class="flex col autocomplete-result $(unique-result)" single-result data-index="0">
+<div class="flex autocomplete-title">$(name) <span class="autocomplete-iata">$(IATA)</span></div>
+<div class="autocomplete-description">$(city), $(country)</div>
+</a>`;
+
 const airportOptions = {
+  formatting: airportFormat,
   maxPatternLength: 32,
   shouldSort: true,
   threshold: .4,
@@ -36,8 +43,8 @@ const InputGroup = ({ data, index, setData }) => {
   const [isDisabled, setIsDisabled] = useState(false);
 
   useEffect(() => {
-    AirportInput(`Origin-${index}`, airportOptions);
-    AirportInput(`Destination-${index}`, airportOptions);
+    AirportInput(`origin-${index}`, airportOptions);
+    AirportInput(`destination-${index}`, airportOptions);
 
     // disable when filled
     const hasDestination = Object.keys(data[index].destination).length !== 0;
@@ -48,10 +55,10 @@ const InputGroup = ({ data, index, setData }) => {
   return (
     <>
       <td>
-        <Input data={data} index={index} isDisabled={isDisabled} name="origin" placeholder="Origin" setData={setData} />
+        <Input data={data} index={index} isDisabled={isDisabled} name="origin" placeholder="SFO" setData={setData} />
       </td>
       <td>
-        <Input data={data} index={index} isDisabled={isDisabled} name="destination" placeholder="Destination" setData={setData} />
+        <Input data={data} index={index} isDisabled={isDisabled} name="destination" placeholder="JFK" setData={setData} />
       </td>
     </>
   );
@@ -111,22 +118,72 @@ export default function Home() {
         <script src="https://cdn.jsdelivr.net/npm/airport-autocomplete-js@latest/dist/index.browser.min.js" />
       </Head>
       <main className={`${styles.Home} ${garamond.variable}`}>
-        <table>
+        <table className={styles.Table}>
+          <thead>
+            <tr>
+              <th>
+                <div className="flex align-center justify-justified">
+                  Origin <ArrowRight size="12" />
+                </div>
+              </th>
+              <th>Destination </th>
+              <th>
+                <div className="flex align-center">
+                  CO₂
+                  <Skull size="12" />
+                </div>
+              </th>
+              <th />
+            </tr>
+          </thead>
           <tbody>
             {data.map(({ carbon, deleted }, index) => {
               return (
                 <tr key={index} className={deleted ? styles['Flight_deleted'] : ''}>
                   <InputGroup key={index} data={data} index={index} setData={setData} />
-                  <td>{carbon ? carbon.toFixed(2) : 0} METRIC TONS</td>
-                  <td>{data.length > 1 && <button onClick={() => handleDeleteRow(index)} type="button">DELETE</button>}</td>
+                  <td className={styles['Table-total']}>{carbon ? carbon.toFixed(2) : ''}{carbon ? 't' : ''}</td>
+                  <td>
+                    <button
+                      className={styles['Table-delete']}
+                      disabled={data.length === 1}
+                      onClick={() => handleDeleteRow(index)}
+                      type="button"
+                    >
+                      <Delete size="15" />
+                    </button>
+                  </td>
                 </tr>
               )
             })}
           </tbody>
+          <tfoot>
+            <tr>
+              <td>
+                <button
+                  aria-label="Add Row"
+                  className={styles['Table-button']}
+                  disabled={!hasPrevRow}
+                  onClick={handleNewRow}
+                  type="button"
+                >
+                  <Plus size="12" />
+                </button>
+              </td>
+              <td />
+              <td className={styles['Table-total']}>{carbonTotal}t Total</td>
+              <td>
+                <button
+                  aria-label="Reset"
+                  className={`${styles['Table-delete']} ${styles['Table-reset']}`}
+                  onClick={handleClear}
+                  type="button"
+                >
+                  <Undo size="12" />
+                </button>
+              </td>
+            </tr>
+          </tfoot>
         </table>
-        <div>{carbonTotal} METRIC TONS</div>
-        <button disabled={!hasPrevRow} onClick={handleNewRow} type="button">Add Another</button>
-        <button onClick={handleClear} type="button">Start Over</button>
       </main>
     </>
   );

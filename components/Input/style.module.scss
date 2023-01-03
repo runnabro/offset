@@ -1,0 +1,24 @@
+.Input {
+  background: none;
+  border: 1px solid transparent;
+  border-radius: 2px;
+  color: var(--theme-text-default);
+  font-size: 1em;
+  padding: 5px;
+  transition: box-shadow 0.3s var(--timing);
+  width: var(--Input-width);
+
+  &:disabled {
+    cursor: not-allowed;
+  }
+
+  &:focus {
+    border: 1px solid blue;
+    box-shadow: 0 0 0 3px rgba(blue, 0.2);
+    outline: 0;
+  }
+
+  &::placehoder {
+    color: var(--theme-text-minimum);
+  }
+}
