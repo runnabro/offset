@@ -75,6 +75,7 @@ export default function Home() {
     origin: {},
   }];
   const [data, setData] = useState(initArr);
+  const [rowLength, setRowLength] = useState(data.length);
 
   const handleNewRow = () => {
     if (hasPrevRow) {
@@ -85,6 +86,7 @@ export default function Home() {
         id: data.length,
         origin: {},
       }]);
+      setRowLength(rowLength + 1);
     }
   };
 
@@ -94,6 +96,7 @@ export default function Home() {
       return flight;
     });
     setData(newData);
+    setRowLength(rowLength - 1);
   };
 
   const handleClear = () => location.reload();
@@ -157,7 +160,7 @@ export default function Home() {
                   <td>
                     <button
                       className={styles['Table-delete']}
-                      disabled={data.length === 1}
+                      disabled={rowLength === 1}
                       onClick={() => handleDeleteRow(index)}
                       type="button"
                     >
