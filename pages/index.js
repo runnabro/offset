@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
 import localFont from '@next/font/local';
 import Head from 'next/head';
-import Image from 'next/image';
 
 import Input from '../components/Input';
+import FlightMap from '../components/FlightMap';
 
 import styles from '../styles/Home.module.scss';
 
@@ -127,6 +127,7 @@ export default function Home() {
         <div>{carbonTotal} METRIC TONS</div>
         <button disabled={!hasPrevRow} onClick={handleNewRow} type="button">Add Another</button>
         <button onClick={handleClear} type="button">Start Over</button>
+        <FlightMap />
       </main>
     </>
   );
