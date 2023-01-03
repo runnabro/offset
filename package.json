@@ -1,35 +1,20 @@
 {
-  "name": "starred",
-  "version": "3.0.0",
-  "description": "",
-  "main": "gulpfile.js",
+  "name": "offset",
+  "version": "2.0.0",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
   "dependencies": {
-    "del": "^2.2.0",
-    "git": "^0.1.5",
-    "gulp": "~3.9.0",
-    "gulp-autoprefixer": "~2.3.1",
-    "gulp-cli": "^1.2.1",
-    "gulp-debug": "~2.0.1",
-    "gulp-file-include": "^0.13.2",
-    "gulp-htmlmin": "^3.0.0",
-    "gulp-imagemin": "^4.1.0",
-    "gulp-inject": "^4.1.0",
-    "gulp-minify-inline": "^0.2.0",
-    "gulp-newer": "~0.5.1",
-    "gulp-rename": "^1.2.2",
-    "gulp-sass": "~2.3.1",
-    "run-sequence": "^1.1.5"
-  },
-  "engine": {
-    "node": "4.2.2",
-    "npm": "3.7.5"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/runnabro/portfolio.com.git"
+    "@next/font": "^13.1.1",
+    "airport-autocomplete-js": "^2.1.4",
+    "next": "13.1.1",
+    "react": "18.2.0",
+    "react-dom": "18.2.0"
   },
   "devDependencies": {
-    "gh-pages": "^1.2.0",
-    "gulp-webserver": "^0.9.1"
+    "sass": "^1.57.1"
   }
 }
