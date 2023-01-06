@@ -38,7 +38,7 @@ const Averages = ({ carbonTotal }) => {
           <div
             className={`${styles["Averages-tooltip"]} ${styles["Averages-tooltip_flip"]}`}
           >
-            All Flights (0.58t)
+            Per Capita Flights (0.58t)
           </div>
         </div>
 
@@ -47,7 +47,7 @@ const Averages = ({ carbonTotal }) => {
           style={{ width: "100%" }}
         >
           <div className={styles["Averages-tooltip"]}>
-            Total ({avgAmerican}t)
+            Per Capita Total ({avgAmerican}t)
           </div>
         </div>
       </div>
