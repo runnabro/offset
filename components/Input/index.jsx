@@ -20,20 +20,25 @@ const calcDistance = (lat1, lon1, lat2, lon2) => {
 };
 
 const calcCarbon = (distance) => {
+  // https://theicct.org/sites/default/files/publications/CO2-commercial-aviation-oct2020.pdf
+  // 3.3 Passenger CO₂ emissions and intensity by aircraft class, pg 12, 2018
+  const regionalAvgDistance = 581; // in km
+  const narrowBodyAvgDistance = 1317;
+  const widebodyAvgDistance = 4696;
+  const regionalEmissionKm = 0.000154; // in metric tons
+  const narrowBodyEmissionKm = 0.000086;
+  const wideBodyEmissionKm = 0.000092;
+  const regionalLimit = (regionalAvgDistance + narrowBodyAvgDistance) / 2;
+  const narrowBodyLimit = (narrowBodyAvgDistance + widebodyAvgDistance) / 2;
   let carbon = 0;
-  distance = distance * 2; // assume round-trip
-  distance = distance * 0.621371; // convert to miles
 
-  // source: http://lipasto.vtt.fi/yksikkopaastot/henkiloliikennee/ilmaliikennee/ilmae.htm
-  // if short-haul, 14.7 ounces/miles = .000416738 metric tonnes/mile
-  // if long-haul, 10.1 ounces/miles = .0002863302 metric tonnes/mile
-  if (distance < 288) carbon = distance * 0.000416738;
-  else carbon = distance * 0.0002863302;
+  // calculate emissions
+  if (distance < regionalLimit) carbon = distance * regionalEmissionKm;
+  else if (distance < narrowBodyLimit) carbon = distance * narrowBodyEmissionKm;
+  else carbon = distance * wideBodyEmissionKm;
 
-  // source: https://www.coolearth.org/cool-earth-carbon/ https://carbonfund.org/individuals/
-  // Carbon Fund estimates they offset 1 metric tonne per $10 USD
-  // Cool Earth estimates they mitigate 1 metric tonne per 25 pence (.32 USD in Dec 2018)
-  // carbon impact by metric tonnes, offset cost, mitigation cost
+  carbon = carbon * 2; // assume round-trip
+
   return carbon;
 };
 

@@ -1,5 +1,4 @@
 .Explainer {
-  gap: var(--md);
   line-height: 1.4;
 
   &-heading {
@@ -21,5 +20,24 @@
   &-text {
     font-family: var(--garamond);
     font-size: 16px;
+  }
+
+  &-table {
+    border-collapse: collapse;
+    border-spacing: 0;
+    color: var(--theme-text-default);
+    font-size: 80%; // same as small
+    margin-bottom: var(--sm);
+    margin-top: var(--sm);
+    text-align: left;
+
+    th,
+    td {
+      padding-right: var(--sm);
+    }
+  }
+
+  &-cite {
+    color: var(--theme-text-minimum);
   }
 }

@@ -7,7 +7,7 @@ const Averages = ({ carbonTotal }) => {
   // in metrics tons
   // https://ourworldindata.org/carbon-footprint-flying
   const avgAmericanFlights = 0.58354;
-  const avgAmerican = 17.48;
+  const avgAmerican = 18.01;
   const [you, setYou] = useState(0);
 
   useEffect(() => {
@@ -46,7 +46,9 @@ const Averages = ({ carbonTotal }) => {
           className={styles["Averages-meter-compare"]}
           style={{ width: "100%" }}
         >
-          <div className={styles["Averages-tooltip"]}>Total (17.48t)</div>
+          <div className={styles["Averages-tooltip"]}>
+            Total ({avgAmerican}t)
+          </div>
         </div>
       </div>
       <Explainer />
