@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import mutationObserver from "../mutationObserver";
 
@@ -19,7 +19,7 @@ const calcDistance = (lat1, lon1, lat2, lon2) => {
   return earthRadiusKm * c;
 };
 
-const calcCarbon = (distance) => {
+const calcCarbon = (distance, roundTrip) => {
   // https://theicct.org/sites/default/files/publications/CO2-commercial-aviation-oct2020.pdf
   // 3.3 Passenger CO₂ emissions and intensity by aircraft class, pg 12, 2018
   const regionalAvgDistance = 581; // in km
@@ -36,38 +36,73 @@ const calcCarbon = (distance) => {
   if (distance < regionalLimit) carbon = distance * regionalEmissionKm;
   else if (distance < narrowBodyLimit) carbon = distance * narrowBodyEmissionKm;
   else carbon = distance * wideBodyEmissionKm;
-
-  carbon = carbon * 2; // assume round-trip
+  if (roundTrip) carbon = carbon * 2;
 
   return carbon;
 };
 
-const Input = ({ data, index, isDisabled, name, placeholder, setData }) => {
+const Input = ({
+  data,
+  index,
+  isDisabled,
+  name,
+  placeholder,
+  setData,
+  type,
+}) => {
   const inputRef = useRef(null);
 
   useEffect(() => {
-    mutationObserver(inputRef.current, () =>
-      handleChange(index, inputRef.current.dataset)
-    );
+    if (type !== "checkbox") {
+      mutationObserver(inputRef.current, () => handleChange());
+    }
   }, []);
 
-  const handleChange = (index, dataset) => {
+  // coordinates
+  const [dataset, setDataset] = useState({});
+  const handleChange = () => setDataset(inputRef.current.dataset);
+
+  // round trip?
+  const [roundTrip, setRoundTrip] = useState(true);
+  const handleCheck = (e) => setRoundTrip(!roundTrip);
+
+  // update data
+  useEffect(() => {
     let newData = data.map((flight) => {
       if (flight?.id === index) {
-        flight[name] = inputRef.current.dataset;
-        flight.carbon = calcCarbon(
-          calcDistance(
-            flight.origin.lat,
-            flight.origin.lon,
-            flight.destination.lat,
-            flight.destination.lon
-          )
-        );
+        flight[name] = dataset;
+        flight.roundTrip = roundTrip;
+        const hasOrigin = Object.keys(flight.destination).length !== 0;
+        const hasDestination = Object.keys(flight.origin).length !== 0;
+        if (hasOrigin && hasDestination) {
+          flight.carbon = calcCarbon(
+            calcDistance(
+              flight.origin.lat,
+              flight.origin.lon,
+              flight.destination.lat,
+              flight.destination.lon
+            ),
+            flight.roundTrip
+          );
+        }
       }
       return flight;
     });
     setData(newData);
-  };
+  }, [dataset, roundTrip]);
+
+  if (type === "checkbox") {
+    return (
+      <div className={styles["Input-wrapper"]}>
+        <input
+          className={`${styles.Input} ${styles["Input_checkbox"]}`}
+          checked={roundTrip}
+          onChange={(e) => handleCheck(e)}
+          type={type}
+        />
+      </div>
+    );
+  }
 
   return (
     <input

@@ -63,6 +63,9 @@ const InputGroup = ({ data, index, setData }) => {
       <td>
         <Input data={data} index={index} isDisabled={isDisabled} name="destination" placeholder="JFK" setData={setData} />
       </td>
+      <td>
+        <Input data={data} index={index} setData={setData} type="checkbox" />
+      </td>
     </>
   );
 };
@@ -76,6 +79,7 @@ export default function Home() {
     destination: {},
     id: 0,
     origin: {},
+    roundTrip: true,
   }];
   const [data, setData] = useState(initArr);
   const [rowLength, setRowLength] = useState(data.length);
@@ -111,6 +115,7 @@ export default function Home() {
     const newCarbonTotal = data.reduce((n, { carbon, deleted }) => !deleted ? n + carbon : n, 0);
     if (isNaN(newCarbonTotal)) return;
     setCarbonTotal(newCarbonTotal.toFixed(2));
+    console.log('total')
   }, [data]);
 
   // add new rows as needed
@@ -122,6 +127,7 @@ export default function Home() {
         destination: {},
         id: data.length,
         origin: {},
+        roundTrip: true,
       }]);
       setRowLength(rowLength + 1);
     }
@@ -147,7 +153,8 @@ export default function Home() {
                   </div>
                 </th>
                 <th>Destination </th>
-                <th>
+                <th title="Round Trip">R/T</th>
+                <th title="CO₂ in Metric Tons">
                   <div className="flex align-center">
                     CO₂
                     <Skull size="12" />
@@ -157,11 +164,11 @@ export default function Home() {
               </tr>
             </thead>
             <tbody>
-              {data.map(({ carbon, deleted, destination, origin }, index) => {
+              {data.map(({ carbon, deleted, destination, origin, roundTrip }, index) => {
                 return (
                   <tr key={index} className={deleted ? styles['Flight_deleted'] : ''}>
                     <InputGroup key={index} data={data} index={index} setData={setData} />
-                    <td className={styles['Table-total']}>{carbon ? carbon.toFixed(2) : ''}{carbon ? 't' : ''}</td>
+                    <td className={styles['Table-total']} title={`${carbon} metric tons`}>{carbon ? carbon.toFixed(2) : ''}{carbon ? 't' : ''}</td>
                     <td>
                       {Object.keys(destination).length !== 0 && Object.keys(origin).length !== 0 ? (
                         <button
@@ -190,7 +197,8 @@ export default function Home() {
               <tr>
                 <td />
                 <td />
-                <td className={styles['Table-total']}>{carbonTotal}t Total</td>
+                <td />
+                <td className={styles['Table-total']} title={`${carbonTotal} metric tons`}>{carbonTotal}t Total</td>
                 <td>
                   <button
                     aria-label="Reset"
