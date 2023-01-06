@@ -185,11 +185,12 @@ export default function Home() {
                           <Delete size="15" />
                         </button>
                       ) : (
-                        <button
-                          className={styles['Table-delete']}
-                          disabled
-                          type="button"
-                        >
+                          <button
+                            aria-label="Delete"
+                            className={styles['Table-delete']}
+                            disabled
+                            type="button"
+                          >
                           <Delete size="15" />
                         </button>
                       )}
