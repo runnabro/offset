@@ -157,7 +157,7 @@ export default function Home() {
                 </th>
                 <th>Destination </th>
                 <th>Fare</th>
-                <th title="Round Trip">R/T</th>
+                <th id="th-roundtrip" title="Round Trip">R/T</th>
                 <th title="CO₂ in Metric Tons">
                   <div className="flex align-center">
                     CO₂
@@ -176,6 +176,7 @@ export default function Home() {
                     <td>
                       {Object.keys(destination).length !== 0 && Object.keys(origin).length !== 0 ? (
                         <button
+                          aria-label="Delete"
                           className={styles['Table-delete']}
                           disabled={rowLength === 1}
                           onClick={() => handleDeleteRow(index)}
