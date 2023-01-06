@@ -1,0 +1,25 @@
+.Explainer {
+  gap: var(--md);
+  line-height: 1.4;
+
+  &-heading {
+    align-items: center;
+    color: var(--theme-text-minimum);
+    cursor: pointer;
+    display: flex;
+    font-size: 13px;
+    font-weight: var(--weight-normal);
+    gap: var(--xs);
+    margin-bottom: var(--xs);
+    transform: translateX(-17px);
+  }
+
+  &-chevron {
+    opacity: 0.5;
+  }
+
+  &-text {
+    font-family: var(--garamond);
+    font-size: 16px;
+  }
+}

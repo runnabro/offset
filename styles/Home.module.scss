@@ -1,6 +1,10 @@
 .Home {
   --Input-width: 200px;
 
+  @media (max-width: 600px) {
+    --Input-width: 150px;
+  }
+
   align-items: center;
   display: flex;
   flex-direction: column;
@@ -18,6 +22,14 @@
   border-spacing: 0;
   width: 100%;
 
+  &Wrapper {
+    @media (max-width: 600px) {
+      max-width: 100%;
+      overflow-x: auto;
+      padding: 3px;
+    }
+  }
+
   th {
     color: var(--theme-text-minimum);
     font-weight: var(--weight-normal);
@@ -31,7 +43,9 @@
 
   th,
   td {
-    border-bottom: 1px solid var(--theme-border);
+    box-shadow: 0 1px 0 var(--theme-border);
+    border-collapse: collapse;
+    border-spacing: 0;
   }
 
   td {

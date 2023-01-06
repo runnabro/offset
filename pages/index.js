@@ -46,7 +46,9 @@ const InputGroup = ({ data, index, setData }) => {
   useEffect(() => {
     AirportInput(`origin-${index}`, airportOptions);
     AirportInput(`destination-${index}`, airportOptions);
+  }, []);
 
+  useEffect(() => {
     // disable when filled
     const hasDestination = Object.keys(data[index].destination).length !== 0;
     const hasOrigin = Object.keys(data[index].origin).length !== 0;
@@ -134,72 +136,74 @@ export default function Home() {
       </Head>
       {loading && <Spinner />}
       <main className={`${styles.Home} ${garamond.variable}`}>
-        <table className={styles.Table}>
-          <thead>
-            <tr>
-              <th>
-                <div className="flex align-center justify-justified">
-                  Origin <ArrowRight size="12" />
-                </div>
-              </th>
-              <th>Destination </th>
-              <th>
-                <div className="flex align-center">
-                  CO₂
-                  <Skull size="12" />
-                </div>
-              </th>
-              <th />
-            </tr>
-          </thead>
-          <tbody>
-            {data.map(({ carbon, deleted }, index) => {
-              return (
-                <tr key={index} className={deleted ? styles['Flight_deleted'] : ''}>
-                  <InputGroup key={index} data={data} index={index} setData={setData} />
-                  <td className={styles['Table-total']}>{carbon ? carbon.toFixed(2) : ''}{carbon ? 't' : ''}</td>
-                  <td>
-                    <button
-                      className={styles['Table-delete']}
-                      disabled={rowLength === 1}
-                      onClick={() => handleDeleteRow(index)}
-                      type="button"
-                    >
-                      <Delete size="15" />
-                    </button>
-                  </td>
-                </tr>
-              )
-            })}
-          </tbody>
-          <tfoot>
-            <tr>
-              <td>
-                <button
-                  aria-label="Add Row"
-                  className={styles['Table-button']}
-                  disabled={!hasPrevRow}
-                  onClick={handleNewRow}
-                  type="button"
-                >
-                  <Plus size="12" />
-                </button>
-              </td>
-              <td />
-              <td className={styles['Table-total']}>{carbonTotal}t Total</td>
-              <td>
-                <button
-                  aria-label="Reset"
-                  className={`${styles['Table-delete']} ${styles['Table-reset']}`}
-                  onClick={handleClear}
-                  type="button"
-                >
-                  <Undo size="12" />
-                </button>
-              </td>
-            </tr>
-          </tfoot>
-        </table>
+        <div className={styles["TableWrapper"]}>
+          <table className={styles.Table}>
+            <thead>
+              <tr>
+                <th>
+                  <div className="flex align-center justify-justified">
+                    Origin <ArrowRight size="12" />
+                  </div>
+                </th>
+                <th>Destination </th>
+                <th>
+                  <div className="flex align-center">
+                    CO₂
+                    <Skull size="12" />
+                  </div>
+                </th>
+                <th />
+              </tr>
+            </thead>
+            <tbody>
+              {data.map(({ carbon, deleted }, index) => {
+                return (
+                  <tr key={index} className={deleted ? styles['Flight_deleted'] : ''}>
+                    <InputGroup key={index} data={data} index={index} setData={setData} />
+                    <td className={styles['Table-total']}>{carbon ? carbon.toFixed(2) : ''}{carbon ? 't' : ''}</td>
+                    <td>
+                      <button
+                        className={styles['Table-delete']}
+                        disabled={rowLength === 1}
+                        onClick={() => handleDeleteRow(index)}
+                        type="button"
+                      >
+                        <Delete size="15" />
+                      </button>
+                    </td>
+                  </tr>
+                )
+              })}
+            </tbody>
+            <tfoot>
+              <tr>
+                <td>
+                  <button
+                    aria-label="Add Row"
+                    className={styles['Table-button']}
+                    disabled={!hasPrevRow}
+                    onClick={handleNewRow}
+                    type="button"
+                  >
+                    <Plus size="12" />
+                  </button>
+                </td>
+                <td />
+                <td className={styles['Table-total']}>{carbonTotal}t Total</td>
+                <td>
+                  <button
+                    aria-label="Reset"
+                    className={`${styles['Table-delete']} ${styles['Table-reset']}`}
+                    onClick={handleClear}
+                    type="button"
+                  >
+                    <Undo size="12" />
+                  </button>
+                </td>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
         <Averages carbonTotal={carbonTotal} />
       </main>
     </>

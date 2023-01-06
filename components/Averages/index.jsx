@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import Explainer from "../Explainer";
 
 import styles from "./style.module.scss";
 
@@ -14,8 +15,10 @@ const Averages = ({ carbonTotal }) => {
   }, [carbonTotal]);
 
   return (
-    <figure className={styles.Averages}>
-      <figcaption className={styles["Averages-title"]}>You vs. USA</figcaption>
+    <figure className={`Card ${styles.Averages}`}>
+      <figcaption className={styles["Averages-title"]}>
+        You vs. The Average American
+      </figcaption>
       <div className={styles["Averages-meter"]}>
         <div
           className={styles["Averages-meter-progress"]}
@@ -35,7 +38,7 @@ const Averages = ({ carbonTotal }) => {
           <div
             className={`${styles["Averages-tooltip"]} ${styles["Averages-tooltip_flip"]}`}
           >
-            Flights Avg. (0.58t)
+            All Flights (0.58t)
           </div>
         </div>
 
@@ -43,9 +46,10 @@ const Averages = ({ carbonTotal }) => {
           className={styles["Averages-meter-compare"]}
           style={{ width: "100%" }}
         >
-          <div className={styles["Averages-tooltip"]}>Total Avg. (17.48t)</div>
+          <div className={styles["Averages-tooltip"]}>Total (17.48t)</div>
         </div>
       </div>
+      <Explainer />
     </figure>
   );
 };
