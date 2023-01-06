@@ -32,7 +32,9 @@ const Explainer = () => {
               Haversine formula
             </a>
             . Flights are organized into regional, narrowbody, and widebody
-            aircraft with their respective flight distances and emissions:
+            aircraft with their respective flight distances and emissions.
+            Footprint and load factors are taken into account based on fare
+            class:
           </p>
           <table className={styles["Explainer-table"]}>
             <thead>
@@ -54,14 +56,40 @@ const Explainer = () => {
                 <td>86</td>
               </tr>
               <tr>
-                <td>Regional</td>
+                <td>Widebody</td>
                 <td>1322</td>
                 <td>92</td>
               </tr>
             </tbody>
           </table>
-          <small className={styles["Explainer-cite"]}>
-            Carbon Footprint Flying,{" "}
+          <table className={styles["Explainer-table"]}>
+            <thead>
+              <tr>
+                <th>Class</th>
+                <th>Single-Aisle</th>
+                <th>Widebody</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Economy</td>
+                <td>0.82</td>
+                <td>0.76</td>
+              </tr>
+              <tr>
+                <td>Business</td>
+                <td>2.07</td>
+                <td>2.30</td>
+              </tr>
+              <tr>
+                <td>First</td>
+                <td>4.79</td>
+                <td>6.89</td>
+              </tr>
+            </tbody>
+          </table>
+          <cite className={styles["Explainer-cite"]}>
+            Our World in Data,{" "}
             <a
               className={styles["Explainer-link"]}
               href="//ourworldindata.org/carbon-footprint-flying"
@@ -71,7 +99,7 @@ const Explainer = () => {
               ourworldindata.org
             </a>
             <br />
-            CO₂ Commercial Aviation,{" "}
+            The International Council on Clean Transportation,{" "}
             <a
               className={styles["Explainer-link"]}
               href="//theicct.org/sites/default/files/publications/CO2-commercial-aviation-oct2020.pdf"
@@ -80,7 +108,17 @@ const Explainer = () => {
             >
               theicct.org
             </a>
-          </small>
+            <br />
+            The World Bank,{" "}
+            <a
+              className={styles["Explainer-link"]}
+              href="//documents1.worldbank.org/curated/en/141851468168853188/pdf/WPS6471.pdf"
+              rel="noopener"
+              target="_blank"
+            >
+              worldbank.org
+            </a>
+          </cite>
         </>
       )}
     </aside>

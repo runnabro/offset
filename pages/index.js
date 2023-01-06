@@ -64,6 +64,9 @@ const InputGroup = ({ data, index, setData }) => {
         <Input data={data} index={index} isDisabled={isDisabled} name="destination" placeholder="JFK" setData={setData} />
       </td>
       <td>
+        <Input data={data} index={index} setData={setData} type="select" />
+      </td>
+      <td>
         <Input data={data} index={index} setData={setData} type="checkbox" />
       </td>
     </>
@@ -77,6 +80,7 @@ export default function Home() {
     carbon: 0,
     deleted: false,
     destination: {},
+    fareClass: 'economy',
     id: 0,
     origin: {},
     roundTrip: true,
@@ -115,7 +119,6 @@ export default function Home() {
     const newCarbonTotal = data.reduce((n, { carbon, deleted }) => !deleted ? n + carbon : n, 0);
     if (isNaN(newCarbonTotal)) return;
     setCarbonTotal(newCarbonTotal.toFixed(2));
-    console.log('total')
   }, [data]);
 
   // add new rows as needed
@@ -125,6 +128,7 @@ export default function Home() {
         carbon: 0,
         deleted: false,
         destination: {},
+        fareClass: 'economy',
         id: data.length,
         origin: {},
         roundTrip: true,
@@ -153,6 +157,7 @@ export default function Home() {
                   </div>
                 </th>
                 <th>Destination </th>
+                <th>Fare</th>
                 <th title="Round Trip">R/T</th>
                 <th title="CO₂ in Metric Tons">
                   <div className="flex align-center">
@@ -195,6 +200,7 @@ export default function Home() {
             </tbody>
             <tfoot>
               <tr>
+                <td />
                 <td />
                 <td />
                 <td />

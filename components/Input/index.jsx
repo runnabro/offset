@@ -19,7 +19,7 @@ const calcDistance = (lat1, lon1, lat2, lon2) => {
   return earthRadiusKm * c;
 };
 
-const calcCarbon = (distance, roundTrip) => {
+const calcCarbon = (distance, fare, roundTrip) => {
   // https://theicct.org/sites/default/files/publications/CO2-commercial-aviation-oct2020.pdf
   // 3.3 Passenger CO₂ emissions and intensity by aircraft class, pg 12, 2018
   const regionalAvgDistance = 581; // in km
@@ -30,12 +30,34 @@ const calcCarbon = (distance, roundTrip) => {
   const wideBodyEmissionKm = 0.000092;
   const regionalLimit = (regionalAvgDistance + narrowBodyAvgDistance) / 2;
   const narrowBodyLimit = (narrowBodyAvgDistance + widebodyAvgDistance) / 2;
+  const isWide = distance > narrowBodyLimit;
+  const economyBasis = 0.82;
+  const businessBasis = 2.07;
+  const firstBasis = 4.79;
+  const economyWideBasis = 0.76;
+  const businessWideBasis = 2.3;
+  const firstWideBasis = 6.89;
   let carbon = 0;
 
   // calculate emissions
   if (distance < regionalLimit) carbon = distance * regionalEmissionKm;
   else if (distance < narrowBodyLimit) carbon = distance * narrowBodyEmissionKm;
   else carbon = distance * wideBodyEmissionKm;
+
+  // fare based
+  switch (fare) {
+    case "business":
+      carbon = carbon * (isWide ? businessWideBasis : businessBasis);
+      break;
+    case "first":
+      carbon = carbon * (isWide ? firstWideBasis : firstBasis);
+      break;
+    default:
+      carbon = carbon * (isWide ? economyWideBasis : economyBasis);
+      break;
+  }
+
+  // if round trip
   if (roundTrip) carbon = carbon * 2;
 
   return carbon;
@@ -53,7 +75,7 @@ const Input = ({
   const inputRef = useRef(null);
 
   useEffect(() => {
-    if (type !== "checkbox") {
+    if (!type) {
       mutationObserver(inputRef.current, () => handleChange());
     }
   }, []);
@@ -62,15 +84,20 @@ const Input = ({
   const [dataset, setDataset] = useState({});
   const handleChange = () => setDataset(inputRef.current.dataset);
 
-  // round trip?
+  // round trip
   const [roundTrip, setRoundTrip] = useState(true);
   const handleCheck = (e) => setRoundTrip(!roundTrip);
+
+  // fare class
+  const [fare, setFare] = useState("Economy");
+  const handleFare = (e) => setFare(e.target.value);
 
   // update data
   useEffect(() => {
     let newData = data.map((flight) => {
       if (flight?.id === index) {
         flight[name] = dataset;
+        flight.fare = fare;
         flight.roundTrip = roundTrip;
         const hasOrigin = Object.keys(flight.destination).length !== 0;
         const hasDestination = Object.keys(flight.origin).length !== 0;
@@ -82,6 +109,7 @@ const Input = ({
               flight.destination.lat,
               flight.destination.lon
             ),
+            flight.fare,
             flight.roundTrip
           );
         }
@@ -89,7 +117,7 @@ const Input = ({
       return flight;
     });
     setData(newData);
-  }, [dataset, roundTrip]);
+  }, [dataset, fare, roundTrip]);
 
   if (type === "checkbox") {
     return (
@@ -101,6 +129,19 @@ const Input = ({
           type={type}
         />
       </div>
+    );
+  }
+
+  if (type === "select") {
+    return (
+      <select
+        className={`${styles.Input} ${styles["Input_select"]}`}
+        onChange={(e) => handleFare(e)}
+      >
+        <option value="economy">Economy</option>
+        <option value="business">Business</option>
+        <option value="first">First</option>
+      </select>
     );
   }
 
