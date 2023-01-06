@@ -75,30 +75,47 @@ const Input = ({
   const inputRef = useRef(null);
 
   useEffect(() => {
-    if (!type) {
-      mutationObserver(inputRef.current, () => handleChange());
-    }
+    if (!type) mutationObserver(inputRef.current, () => handleChange());
   }, []);
 
   // coordinates
   const [dataset, setDataset] = useState({});
   const handleChange = () => setDataset(inputRef.current.dataset);
+  useEffect(() => {
+    let newData = data.map((flight) => {
+      if (flight?.id === index) flight[name] = dataset;
+      return flight;
+    });
+    setData(newData);
+  }, [dataset]);
 
   // round trip
   const [roundTrip, setRoundTrip] = useState(true);
   const handleCheck = (e) => setRoundTrip(!roundTrip);
+  useEffect(() => {
+    let newData = data.map((flight) => {
+      if (flight?.id === index) flight.roundTrip = roundTrip;
+      return flight;
+    });
+    setData(newData);
+  }, [roundTrip]);
 
   // fare class
-  const [fare, setFare] = useState("Economy");
+  const [fare, setFare] = useState("economy");
   const handleFare = (e) => setFare(e.target.value);
+  useEffect(() => {
+    let newData = data.map((flight) => {
+      if (flight?.id === index) flight.fareClass = fare;
+      return flight;
+    });
+    setData(newData);
+  }, [fare]);
 
-  // update data
+  // update carbon
+  const [carbon, setCarbon] = useState(null);
   useEffect(() => {
     let newData = data.map((flight) => {
       if (flight?.id === index) {
-        flight[name] = dataset;
-        flight.fare = fare;
-        flight.roundTrip = roundTrip;
         const hasOrigin = Object.keys(flight.destination).length !== 0;
         const hasDestination = Object.keys(flight.origin).length !== 0;
         if (hasOrigin && hasDestination) {
@@ -109,15 +126,22 @@ const Input = ({
               flight.destination.lat,
               flight.destination.lon
             ),
-            flight.fare,
+            flight.fareClass,
             flight.roundTrip
           );
+          setCarbon(flight.carbon);
         }
       }
       return flight;
     });
-    setData(newData);
-  }, [dataset, fare, roundTrip]);
+    setWorkingData(newData);
+  }, [data]);
+
+  // update data
+  const [workingData, setWorkingData] = useState(null);
+  useEffect(() => {
+    if (workingData) setData(workingData);
+  }, [carbon]);
 
   if (type === "checkbox") {
     return (

@@ -142,7 +142,6 @@ export default function Home() {
       <Head>
         <title>🛩️</title>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <script src="https://cdn.jsdelivr.net/npm/airport-autocomplete-js@latest/dist/index.browser.min.js" />
         <link rel="icon" href="/favicon.png" />
       </Head>
       {loading && <Spinner />}
