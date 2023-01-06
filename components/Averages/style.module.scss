@@ -1,10 +1,8 @@
 .Averages {
-  --Averages-bg: #{rgba(black, 0.05)};
   --Averages-meter-bg: #{rgba(black, 0.1)};
 
   @media (prefers-color-scheme: dark) {
-    --Averages-bg: #{rgba(white, 0.05)};
-    --Averages-meter-bg: rgba(white, 0.1);
+    --Averages-meter-bg: #{rgba(white, 0.1)};
   }
 
   padding: var(--lg);

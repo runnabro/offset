@@ -80,19 +80,6 @@ export default function Home() {
   const [data, setData] = useState(initArr);
   const [rowLength, setRowLength] = useState(data.length);
 
-  const handleNewRow = () => {
-    if (hasPrevRow) {
-      setData(prev => [...prev, {
-        carbon: 0,
-        deleted: false,
-        destination: {},
-        id: data.length,
-        origin: {},
-      }]);
-      setRowLength(rowLength + 1);
-    }
-  };
-
   const handleDeleteRow = index => {
     let newData = data.map((flight) => {
       if (flight?.id === index) flight.deleted = true;
@@ -126,6 +113,20 @@ export default function Home() {
     setCarbonTotal(newCarbonTotal.toFixed(2));
   }, [data]);
 
+  // add new rows as needed
+  useEffect(() => {
+    if (hasPrevRow) {
+      setData(prev => [...prev, {
+        carbon: 0,
+        deleted: false,
+        destination: {},
+        id: data.length,
+        origin: {},
+      }]);
+      setRowLength(rowLength + 1);
+    }
+  }, [hasPrevRow]);
+
   return (
     <>
       <Head>
@@ -156,20 +157,30 @@ export default function Home() {
               </tr>
             </thead>
             <tbody>
-              {data.map(({ carbon, deleted }, index) => {
+              {data.map(({ carbon, deleted, destination, origin }, index) => {
                 return (
                   <tr key={index} className={deleted ? styles['Flight_deleted'] : ''}>
                     <InputGroup key={index} data={data} index={index} setData={setData} />
                     <td className={styles['Table-total']}>{carbon ? carbon.toFixed(2) : ''}{carbon ? 't' : ''}</td>
                     <td>
-                      <button
-                        className={styles['Table-delete']}
-                        disabled={rowLength === 1}
-                        onClick={() => handleDeleteRow(index)}
-                        type="button"
-                      >
-                        <Delete size="15" />
-                      </button>
+                      {Object.keys(destination).length !== 0 && Object.keys(origin).length !== 0 ? (
+                        <button
+                          className={styles['Table-delete']}
+                          disabled={rowLength === 1}
+                          onClick={() => handleDeleteRow(index)}
+                          type="button"
+                        >
+                          <Delete size="15" />
+                        </button>
+                      ) : (
+                        <button
+                          className={styles['Table-delete']}
+                          disabled
+                          type="button"
+                        >
+                          <Delete size="15" />
+                        </button>
+                      )}
                     </td>
                   </tr>
                 )
@@ -177,17 +188,7 @@ export default function Home() {
             </tbody>
             <tfoot>
               <tr>
-                <td>
-                  <button
-                    aria-label="Add Row"
-                    className={styles['Table-button']}
-                    disabled={!hasPrevRow}
-                    onClick={handleNewRow}
-                    type="button"
-                  >
-                    <Plus size="12" />
-                  </button>
-                </td>
+                <td />
                 <td />
                 <td className={styles['Table-total']}>{carbonTotal}t Total</td>
                 <td>

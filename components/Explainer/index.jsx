@@ -31,7 +31,8 @@ const Explainer = () => {
             Haversine formula
           </a>
           . Short-haul flights (&#60;288 miles) at 0.000416738 tons of carbon
-          per mile; and long-haul 0.0002863302 per mile.
+          per mile; and long-haul 0.0002863302 per mile. Assumes all flights are
+          round trip and in economy.
         </p>
       )}
     </aside>
