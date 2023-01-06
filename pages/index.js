@@ -3,6 +3,7 @@ import localFont from '@next/font/local';
 import Head from 'next/head';
 import { ArrowRight, Delete, Plus, Skull, Undo } from 'lucide-react';
 
+import Averages from '../components/Averages';
 import Input from '../components/Input';
 import Spinner from '../components/Spinner';
 
@@ -199,6 +200,7 @@ export default function Home() {
             </tr>
           </tfoot>
         </table>
+        <Averages carbonTotal={carbonTotal} />
       </main>
     </>
   );

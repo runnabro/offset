@@ -20,7 +20,7 @@
     position: absolute;
     margin-top: 5px;
     width: var(--Input-width);
-    z-index: 1;
+    z-index: 99999;
 
     &:empty {
       display: none;
