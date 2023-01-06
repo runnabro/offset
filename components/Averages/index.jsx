@@ -7,7 +7,7 @@ const Averages = ({ carbonTotal }) => {
   // in metrics tons
   // https://ourworldindata.org/carbon-footprint-flying
   const avgAmericanFlights = 0.58354;
-  const avgAmerican = 18.01;
+  const avgAmerican = 16.19;
   const [you, setYou] = useState(0);
 
   useEffect(() => {
@@ -38,7 +38,7 @@ const Averages = ({ carbonTotal }) => {
           <div
             className={`${styles["Averages-tooltip"]} ${styles["Averages-tooltip_flip"]}`}
           >
-            Per Capita Flights (0.58t)
+            Per Capita Flights ({avgAmericanFlights.toFixed(2)}t)
           </div>
         </div>
 
