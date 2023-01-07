@@ -57,7 +57,7 @@ const Explainer = () => {
               </tr>
               <tr>
                 <td>Widebody</td>
-                <td>1322</td>
+                <td>4696</td>
                 <td>92</td>
               </tr>
             </tbody>
