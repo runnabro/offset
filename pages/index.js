@@ -11,12 +11,12 @@ import styles from '../styles/Home.module.scss';
 
 const garamond = localFont({
   src: [{
-    path: '../fonts/Garamond.ttf',
+    path: '../fonts/Garamond.woff2',
     style: 'normal',
     weight: '400',
   },
   {
-    path: '../fonts/Garamond-Bold.ttf',
+    path: '../fonts/Garamond-Bold.woff2',
     style: 'normal',
     weight: '700',
   }],
